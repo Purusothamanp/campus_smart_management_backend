@@ -41,9 +41,6 @@ public class UserService {
         }
 
         Role assignedRole = request.getRole() != null ? request.getRole() : Role.STUDENT;
-        if (assignedRole == Role.ADMIN) {
-            throw new BadRequestException("Cannot register directly as an ADMIN");
-        }
 
         User user = new User();
         user.setUsername(request.getUsername().trim());
@@ -52,7 +49,8 @@ public class UserService {
         user.setFullName(request.getFullName().trim());
         user.setDepartment(request.getDepartment());
         user.setRole(assignedRole);
-        user.setStatus(UserStatus.PENDING); // Requires admin approval as per requirements
+        // Admin accounts are immediately approved; Student/Faculty accounts can be approved by Admin
+        user.setStatus(assignedRole == Role.ADMIN ? UserStatus.APPROVED : UserStatus.PENDING);
 
         User savedUser = userRepository.save(user);
 

@@ -25,7 +25,7 @@ public class RegisterRequest {
 
     private String department;
 
-    @NotNull(message = "Role is required (STUDENT, FACULTY)")
+    @NotNull(message = "Role is required (STUDENT, FACULTY, ADMIN)")
     private Role role;
 
     public RegisterRequest() {

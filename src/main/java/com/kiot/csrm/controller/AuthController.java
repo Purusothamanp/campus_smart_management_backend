@@ -57,7 +57,11 @@ public class AuthController {
                 savedUser.getStatus()
         );
 
-        return ResponseEntity.ok(ApiResponse.ok("Registration successful! Your account is pending Admin approval.", response));
+        String message = savedUser.getStatus() == UserStatus.APPROVED
+                ? "Registration successful! You can now sign in immediately."
+                : "Registration successful! Your account is pending Admin approval.";
+
+        return ResponseEntity.ok(ApiResponse.ok(message, response));
     }
 
     @PostMapping("/login")
