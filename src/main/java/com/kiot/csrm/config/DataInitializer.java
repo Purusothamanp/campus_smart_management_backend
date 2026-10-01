@@ -39,16 +39,16 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void seedUsersAndData() {
-        // 1. Seed or update required accounts with exact requested credentials
+        // 1. Seed essential initial campus accounts
         upsertUser("admin", "admin123", "admin@campus.edu", "Campus Administrator", "Campus Operations", Role.ADMIN, UserStatus.APPROVED);
-        upsertUser("faculty", "faculty123456", "faculty@campus.edu", "Faculty Member", "Computer Science", Role.FACULTY, UserStatus.APPROVED);
-        upsertUser("student", "password123456", "student@campus.edu", "Campus Student", "Information Technology", Role.STUDENT, UserStatus.APPROVED);
+        upsertUser("faculty", "faculty123", "faculty@campus.edu", "Dr. S. Ramanathan", "Computer Science", Role.FACULTY, UserStatus.APPROVED);
+        upsertUser("student", "student123", "student@campus.edu", "Purusothaman P", "Information Technology", Role.STUDENT, UserStatus.APPROVED);
 
-        // Demo pending student for testing Admin account approval workflow
+        // Initial pending user for testing Admin account approval workflow
         upsertUser("priya.s", "password123", "priya@campus.edu", "Priya Sundar", "Mechanical Engineering", Role.STUDENT, UserStatus.PENDING);
 
         if (resourceRepository.count() == 0) {
-            seedResourcesAndDemoData();
+            seedInitialResourcesAndData();
         }
     }
 
@@ -64,7 +64,7 @@ public class DataInitializer implements CommandLineRunner {
         userRepository.save(user);
     }
 
-    private void seedResourcesAndDemoData() {
+    private void seedInitialResourcesAndData() {
         User faculty = userRepository.findByUsername("faculty").orElse(null);
         User student = userRepository.findByUsername("student").orElse(null);
         User admin = userRepository.findByUsername("admin").orElse(null);
